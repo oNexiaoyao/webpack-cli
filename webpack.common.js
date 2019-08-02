@@ -1,0 +1,172 @@
+const path = require('path');
+const webpack = require('webpack');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MinCssExtractPlugin = require('mini-css-extract-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+
+const generateHtmlWebpackPlugin = () => {
+    const _htmlInfos = [
+        {
+            filename: 'index.html',
+            title: 'index',
+            template: './src/page/pageOne/index.html',
+            chunks: ['index']
+        },
+        {
+            filename: 'index01.html',
+            title: 'index01',
+            template: './src/page/pageTwo/index.html',
+            chunks: ['index01']
+        }
+    ]
+
+    return _htmlInfos.map(info => {
+        return new HtmlWebpackPlugin({
+            filename: info.filename,
+            title: info.title,
+            template: info.template,
+            chunks: info.chunks
+        })
+    })
+}
+
+const getEntries = pattern => {
+    var fileList = glob.sync(pattern)
+    return fileList.reduce((previous, current) => {
+        var filePath = path.parse(path.relative(path.resolve(__dirname, './src'), current))
+        var withoutSuffix = path.join(filePath.dir, filePath.name)
+        previous[withoutSuffix] = path.resolve(__dirname, current)
+        return previous
+    }, {})
+}
+
+module.exports = {
+    entry: {
+        index: './src/index.js',
+        index01: './src/index01.js'
+    },
+    module: {
+        rules: [
+            {
+                // 样式
+                test: /\.css$/,
+                include: path.resolve(__dirname, 'src'),
+                use: [
+                    {
+                        loader: MinCssExtractPlugin.loader
+                    },
+                    'css-loader'
+                ]
+            },
+            {
+                // 图片
+                test: /\.(png|svg|jpg|gif)$/,
+                include: path.resolve(__dirname, 'src'),
+                use: [
+                    'file-loader'
+                ]
+            },
+            {
+                // 字体文件
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                include: path.resolve(__dirname, 'src'),
+                use: [
+                    'file-loader'
+                ]
+            },
+            {
+                test: /\.(csv|tsv)$/,
+                include: path.resolve(__dirname, 'src'),
+                use: [
+                    'csv-loader'
+                ]
+            },
+            {
+                test: /\.xml$/,
+                include: path.resolve(__dirname, 'src'),
+                use: [
+                    'xml-loader'
+                ]
+            },
+            {
+                test: /\.tsx?$/,
+                include: path.resolve(__dirname, 'src'),
+                use: 'ts-loader'
+            }
+        ]
+    },
+    plugins: [
+        // 生成资源对应表-manifest.json
+        new ManifestPlugin(),
+        new CleanWebpackPlugin(),
+        new FriendlyErrorsWebpackPlugin(),
+        ...generateHtmlWebpackPlugin(),
+        new MinCssExtractPlugin({
+            filename: 'css/[name].css',
+            chunkFilename: '[id].css',
+            ignoreOrder: false
+        }),
+        new AddAssetHtmlPlugin([
+            {
+                // Files that the assets will be added to
+                // 不设置或者为 []，则表示为所有的页面都注入
+                files: [],
+                // The absolute path of the file you want to add to the compilation, and resulting HTML file. Also support globby string.
+                // filepath: path.resolve(__dirname, './public/vendor/*.dll.js'),
+                filepath: path.resolve(__dirname, './public/asset/js/jquery.min.js'),
+                // the output directory of the file.
+                outputPath: 'vendor',
+                // the public path of the script or link tag.
+                publicPath: './vendor'
+            },
+            {
+                files: ['index.html'],
+                filepath: path.resolve(__dirname, './public/vendor/lodash.dll.js'),
+                outputPath: 'vendor',
+                publicPath: './vendor'
+            },
+            {
+                files: ['index01.html'],
+                filepath: path.resolve(__dirname, './public/vendor/queryString.dll.js'),
+                outputPath: 'vendor',
+                publicPath: './vendor'
+            }
+        ])
+        // 不必通过 import/ require 使用模块
+        // new webpack.ProvidePlugin({
+        //     _: 'lodash',
+        //     $: 'jquery',
+        //     jQuery: 'jquery',
+        //     'window.jQuery': 'jquery'
+        // })
+    ],
+    output: {
+        filename: './js/[name].js',
+        path: path.resolve(__dirname, 'dist')
+    },
+    resolve: {
+        // 自动解析确定的扩展（可以在引入的时候不需要带上扩展后缀）
+        extensions: ['.tsx', '.ts', '.js']
+    },
+    optimization: {
+        // true by default --对编译产生的代码进行压缩
+        minimize: false,
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    name: 'commons',
+                    chunks: 'initial'
+                }
+            }
+        }
+    },
+    externals: {
+        // 属性名称是 jquery, 表示应该排除 import $ from 'jquery' 中的 jquery 模块
+        // $ 的值将被用来检索一个全局的 $ 变量。换句话说，当设置为一个字符串时，它将被视为全局的
+        jquery: '$'
+    }
+}
+

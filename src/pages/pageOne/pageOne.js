@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { cube } from './component/math';
 require('./index.css');
 
 if (process.env.NODE_ENV !== 'production') {

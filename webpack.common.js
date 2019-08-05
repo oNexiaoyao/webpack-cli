@@ -1,4 +1,5 @@
 const path = require('path');
+const glob = require('glob');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -6,47 +7,58 @@ const MinCssExtractPlugin = require('mini-css-extract-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const generateHtmlWebpackPlugin = () => {
-    const _htmlInfos = [
-        {
-            filename: 'index.html',
-            title: 'index',
-            template: './src/page/pageOne/index.html',
-            chunks: ['index']
-        },
-        {
-            filename: 'index01.html',
-            title: 'index01',
-            template: './src/page/pageTwo/index.html',
-            chunks: ['index01']
-        }
-    ]
-
-    return _htmlInfos.map(info => {
-        return new HtmlWebpackPlugin({
-            filename: info.filename,
-            title: info.title,
-            template: info.template,
-            chunks: info.chunks
-        })
-    })
-}
-
+// 获取入口文件
 const getEntries = pattern => {
-    var fileList = glob.sync(pattern)
+    const fileList = glob.sync(pattern)
     return fileList.reduce((previous, current) => {
-        var filePath = path.parse(path.relative(path.resolve(__dirname, './src'), current))
-        var withoutSuffix = path.join(filePath.dir, filePath.name)
-        previous[withoutSuffix] = path.resolve(__dirname, current)
+        const filePath = path.parse(path.relative(path.resolve(__dirname, './src'), current));
+        // 包含路径的名称 key
+        // const withoutSuffix = path.join(filePath.dir, filePath.name).replace(/\\/g, '/');
+        // 用文件名称作为 key，（文件名称不能重复）
+        const withoutSuffix = filePath.name;
+        previous[withoutSuffix] = path.resolve(__dirname, current);
         return previous
     }, {})
 }
+// 所有入口 index.js 匹配正则
+const jsRegex = `./src/pages/**/*.js`;
+// 所有子页面模板文件匹配
+const htmlRegex = `./src/pages/**/*.html`;
+
+const jsEntries = getEntries(jsRegex);
+const htmlEntries = getEntries(htmlRegex);
+
+
+// 根据 src 目录结构生成对应的文件结构
+const generateHtmlWebpackPlugin = () => {
+    const htmlPlugins = [];
+
+    for (htmlEntry in htmlEntries) {
+        const _config = {
+            filename: htmlEntry + '.html',
+            template: htmlEntries[htmlEntry],
+            chunks: []
+        }
+
+        // 判断注入每个页面的 js 文件
+        for (jsEntry in jsEntries) {
+            if (htmlEntry === jsEntry) {
+                // js 和 html 文件所在的路径
+                _config.chunks.push(htmlEntry.replace(/\\/g, '/'));
+            }
+        }
+        htmlPlugins.push(new HtmlWebpackPlugin(_config));
+    }
+    return htmlPlugins;
+}
 
 module.exports = {
-    entry: {
-        index: './src/index.js',
-        index01: './src/index01.js'
+    entry: jsEntries,
+    output: {
+        filename: 'js/[name].js',
+        path: path.resolve(__dirname, './dist')
     },
     module: {
         rules: [
@@ -123,16 +135,22 @@ module.exports = {
                 publicPath: './vendor'
             },
             {
-                files: ['index.html'],
+                files: ['pageOne.html'],
                 filepath: path.resolve(__dirname, './public/vendor/lodash.dll.js'),
                 outputPath: 'vendor',
                 publicPath: './vendor'
             },
             {
-                files: ['index01.html'],
+                files: ['pageTwo.html'],
                 filepath: path.resolve(__dirname, './public/vendor/queryString.dll.js'),
                 outputPath: 'vendor',
                 publicPath: './vendor'
+            }
+        ]),
+        new CopyWebpackPlugin([
+            {
+                from: path.resolve(__dirname, 'public/asset'),
+                to: path.resolve(__dirname, './dist/asset')
             }
         ])
         // 不必通过 import/ require 使用模块
@@ -143,10 +161,6 @@ module.exports = {
         //     'window.jQuery': 'jquery'
         // })
     ],
-    output: {
-        filename: './js/[name].js',
-        path: path.resolve(__dirname, 'dist')
-    },
     resolve: {
         // 自动解析确定的扩展（可以在引入的时候不需要带上扩展后缀）
         extensions: ['.tsx', '.ts', '.js']

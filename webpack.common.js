@@ -65,7 +65,6 @@ module.exports = {
             {
                 // 样式
                 test: /\.css$/,
-                include: path.resolve(__dirname, 'src'),
                 use: [
                     {
                         loader: MinCssExtractPlugin.loader
@@ -75,38 +74,54 @@ module.exports = {
             },
             {
                 // 图片
-                test: /\.(png|svg|jpg|gif)$/,
-                include: path.resolve(__dirname, 'src'),
+                test: /\.(png|svg|jpe?g|gif)$/,
                 use: [
-                    'file-loader'
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192,
+                            name: '../assets/images/[name].[ext]'
+                        }
+                    }
                 ]
             },
             {
                 // 字体文件
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
-                include: path.resolve(__dirname, 'src'),
                 use: [
-                    'file-loader'
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192
+                        }
+                    }
                 ]
             },
             {
                 test: /\.(csv|tsv)$/,
-                include: path.resolve(__dirname, 'src'),
                 use: [
                     'csv-loader'
                 ]
             },
             {
                 test: /\.xml$/,
-                include: path.resolve(__dirname, 'src'),
                 use: [
                     'xml-loader'
                 ]
             },
             {
                 test: /\.tsx?$/,
-                include: path.resolve(__dirname, 'src'),
                 use: 'ts-loader'
+            },
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                    presets: ['@babel/preset-env']
+                    }
+                }
             }
         ]
     },
@@ -128,7 +143,7 @@ module.exports = {
                 files: [],
                 // The absolute path of the file you want to add to the compilation, and resulting HTML file. Also support globby string.
                 // filepath: path.resolve(__dirname, './public/vendor/*.dll.js'),
-                filepath: path.resolve(__dirname, './public/asset/js/jquery.min.js'),
+                filepath: path.resolve(__dirname, './public/assets/js/jquery.min.js'),
                 // the output directory of the file.
                 outputPath: 'vendor',
                 // the public path of the script or link tag.
@@ -149,8 +164,8 @@ module.exports = {
         ]),
         new CopyWebpackPlugin([
             {
-                from: path.resolve(__dirname, 'public/asset'),
-                to: path.resolve(__dirname, './dist/asset')
+                from: path.resolve(__dirname, 'public/assets'),
+                to: path.resolve(__dirname, './dist/assets')
             }
         ])
         // 不必通过 import/ require 使用模块

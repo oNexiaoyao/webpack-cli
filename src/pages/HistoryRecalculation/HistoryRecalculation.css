@@ -1,0 +1,271 @@
+.container-fluid {
+  padding: 20px;
+}
+
+.container-title {
+  position: relative;
+  padding-bottom: 20px;
+  padding-left: 12px;
+  line-height: 20px;
+}
+
+.container-title::before {
+  content: '';
+  height: 20px;
+  left: 0;
+  position: absolute;
+  border: 2px solid #058ecc;
+}
+
+.container-title span{
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.container-command label {
+  font-weight: normal;
+}
+
+.container-command .date {
+  width: 150px;
+  margin-right: 20px;
+}
+
+.container-command .bootstrap-select {
+  width: 120px;
+  margin-right: 20px;
+}
+
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+  width: 120px;
+}
+
+.container-command .queryBtn {
+  padding: 6px 15px;
+  background-color: #058ecc;
+  border-color: #058ecc;
+}
+
+.container-command .batchEditBtn {
+  float: right;
+}
+
+.container-content {
+  padding-top: 20px;
+}
+
+.container-content .table {
+  width: 100%;
+}
+
+.container-content .table th {
+  background-color: #F3FBFF;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.container-content .table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+  border-bottom-width: 0;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+  background-color: #fff;
+}
+
+.table-striped>tbody>tr:nth-of-type(even) {
+  background-color: #fafafa;
+}
+
+/**
+ * 分页样式
+ */
+
+
+ .dataTables_wrapper .dataTables_paginate {
+  float: right;
+}
+
+.dataTables_wrapper .dataTables_length {
+  float: right;
+  padding-top: 6px;
+}
+
+.dataTables_wrapper .dataTables_length select.input-sm {
+  height: 26px;
+  line-height: 26px;
+  border-radius: 4px;
+}
+
+
+/**
+* 数据列表分页组件
+*/
+.dataTables_wrapper .dataTables_paginate {
+  padding-top: 6px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  border: 0;
+  padding: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button:active {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.dataTables_wrapper .dataTables_paginate .pagination > li:first-child > a,
+.dataTables_paginate .pagination > li:first-child > span {
+  border: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate .pagination > li:last-child > a,
+.dataTables_paginate .pagination > li:first-child > span {
+  border: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate .pagination > li > a,
+.dataTables_paginate .pagination > li > span {
+  padding: 1px 7px;
+  border-radius: 4px;
+  margin: 0 4px;
+}
+
+.dataTables_wrapper .dataTables_paginate .pagination > li > a:focus {
+  outline: none;
+}
+
+/* 跳转链接 */
+.detail {
+  color: #058ecc;
+  display: inline-block;
+  margin: 0 8px;
+}
+
+/* 模态框样式修改 */
+.modal-header {
+  color: #fff;
+  background-color: #3F9ED7;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-bottom-width: 0;
+}
+
+.modal-header h4 {
+  float: left;
+  padding-top: 4px;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.modal-header .close {
+  color: #fff;
+  opacity: 1;
+}
+
+.modal-header .close span {
+  font-size: 28px;
+}
+
+.modal-body label {
+  font-weight: normal;
+}
+
+.modal-body .date {
+  width: 200px;
+  margin-right: 15px;
+}
+
+.modal-body .btn-box {
+  margin-top: 20px;
+  padding: 6px;
+  text-align: center;
+}
+
+.modal-body .btn-box .recalculationBtn {
+  margin-right: 100px;
+  padding: 6px 15px;
+  background-color: #058ecc;
+  border-color: #058ecc;
+}
+
+.modal-body .btn-box .cancelBtn {
+  padding: 6px 15px;
+}
+
+/* dataTables表头全选 */
+table.dataTable thead th:first-of-type {
+  position: relative;
+}
+
+table.dataTable thead th.select-checkbox:before {
+  content: ' ';
+  margin-top: -6px;
+  margin-left: -6px;
+  border: 1px solid #000;
+  border-radius: 3px;
+}
+
+table.dataTable thead th.select-checkbox:before,
+table.dataTable thead th.select-checkbox:after {
+  display: block;
+  position: absolute;
+  top: 1.2em;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+}
+
+/* 复选框选中 */
+table.dataTable.hover tbody>tr.selected.odd:hover,
+table.dataTable.hover tbody>tr>.selected.odd:hover,
+table.dataTable.display tbody>tr.selected.odd:hover,
+table.dataTable.display tbody>tr>.selected.odd:hover {
+  background-color: #fff;
+}
+
+table.dataTable.hover tbody>tr.selected.even:hover,
+table.dataTable.hover tbody>tr>.selected.even:hover,
+table.dataTable.display tbody>tr.selected.even:hover,
+table.dataTable.display tbody>tr>.selected.even:hover {
+  background-color: #fafafa;
+}
+
+table.dataTable tbody>tr.selected.odd,
+table.dataTable tbody>tr>.selected.odd {
+  background-color: #fff;
+}
+
+table.dataTable tbody>tr.selected.even,
+table.dataTable tbody>tr>.selected.even {
+  background-color: #fafafa;
+}
+
+table.dataTable.stripe tbody>tr.odd.selected,
+table.dataTable.stripe tbody>tr.odd>.selected,
+table.dataTable.display tbody>tr.odd.selected,
+table.dataTable.display tbody>tr.odd>.selected {
+  background-color: #fff;
+}
+
+table.dataTable.stripe tbody>tr.odd.selected,
+table.dataTable.stripe tbody>tr.odd>.selected,
+table.dataTable.display tbody>tr.odd.selected,
+table.dataTable.display tbody>tr.odd>.selected {
+  background-color: #fff;
+}
+
+/* datatable表格行样式 */
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  padding: 6px;
+}

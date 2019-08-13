@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= htmlWebpackPlugin.options.title %></title>
+  <link rel="stylesheet" href="./assets/css/common/bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/css/common/bootstrap-select.min.css">
+  <link rel="stylesheet" href="./assets/css/common/bootstrap-datetimepicker.min.css">
+  <link rel="stylesheet" href="./assets/css/common/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/css/common/iconfont.css">
+  <link rel="stylesheet" href="./assets/css/common/layui.css">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="container-title">
+      <form action="" class="form-inline">
+        <div class="form-group">
+          <span>指标选择</span>
+        </div>
+        <div class="form-group">
+          <input type="radio" name="indexRadio" id="singleIndex" value="single" checked>
+          <label for="singleIndex" class="control-label">单个指标</label>
+        </div>
+        <div class="form-group">
+          <input type="radio" name="indexRadio" id="allIndex" value="all">
+          <label for="allIndex" class="control-label">所有指标</label>
+        </div>
+      </form>
+    </div>
+    <div class="container-command">
+      <form action="" class="form-inline">
+        <div class="form-group">
+          <label for="startTime" class="control-label ">时间：</label>
+          <div id="startTime" class="input-group date">
+            <input type="text" class="form-control" placeholder="请选择时间">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-th"></span>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="endTime" class="control-label ">至：</label>
+          <div id="endTime" class="input-group date">
+            <input type="text" class="form-control" placeholder="请选择时间">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-th"></span>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="" class="control-label">电厂：</label>
+          <select class="selectpicker" id="powerStationSelect" data-size="8">
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="" class="control-label">工期：</label>
+          <select class="selectpicker" id="constructionPeriodSelect" data-size="8">
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="" class="control-label">机组：</label>
+          <select class="selectpicker" id="unitSelect" data-size="8">
+          </select>
+        </div>
+      </form>
+      <form action="" class="form-inline second-form">
+        <div class="form-group indexCategorySelect">
+          <label for="" class="control-label">指标分类：</label>
+          <select class="selectpicker" id="indexCategorySelect" data-size="8">
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="" class="control-label">指标名称：</label>
+          <select class="selectpicker" id="indexNameSelect" data-size="8">
+          </select>
+        </div>
+        <button type="button" class="btn btn-primary queryBtn" id="queryBtn">查询</button>
+      </form>
+    </div>
+    <div class="container-content">
+      <table id="tableShow" class="display table table-bordered">
+        <thead>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script src="./assets/js/common/polyfill.min.js"></script>
+  <script src="./assets/js/common/jquery.min.js"></script>
+  <script src="./assets/js/common/bootstrap.min.js"></script>
+  <script src="./assets/js/common/bootstrap-select.min.js"></script>
+  <script src="./assets/js/common/moment-with-locales.min.js"></script>
+  <script src="./assets/js/common/bootstrap-datetimepicker.min.js"></script>
+  <script src="./assets/js/common/jquery.dataTables.min.js"></script>
+  <script src="./assets/js/common/dataTables.bootstrap.min.js"></script>
+  <script src="./assets/js/common/jquery.validate.min.js"></script>
+  <script src="./assets/js/common/layui.all.js"></script>
+  <!-- <script src="./js/baseConfig.js"></script> -->
+</body>
+
+</html>

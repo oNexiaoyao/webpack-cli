@@ -23,13 +23,12 @@ const getEntries = pattern => {
     }, {})
 }
 // 所有入口 index.js 匹配正则
-const jsRegex = `./src/pages/**/*.js`;
+const jsRegex = `./src/pages/*/*.js`;
 // 所有子页面模板文件匹配
-const htmlRegex = `./src/pages/**/*.html`;
+const htmlRegex = `./src/pages/*/*.html`;
 
 const jsEntries = getEntries(jsRegex);
 const htmlEntries = getEntries(htmlRegex);
-
 
 // 根据 src 目录结构生成对应的文件结构
 const generateHtmlWebpackPlugin = () => {
@@ -137,36 +136,50 @@ module.exports = {
             ignoreOrder: false
         }),
         new AddAssetHtmlPlugin([
+            // {
+            //     // Files that the assets will be added to
+            //     // 不设置或者为 []，则表示为所有的页面都注入
+            //     files: [],
+            //     // The absolute path of the file you want to add to the compilation, and resulting HTML file. Also support globby string.
+            //     // filepath: path.resolve(__dirname, './public/vendor/*.dll.js'),
+            //     filepath: path.resolve(__dirname, './public/assets/js/jquery.min.js'),
+            //     // the output directory of the file.
+            //     outputPath: 'vendor',
+            //     // the public path of the script or link tag.
+            //     publicPath: './vendor'
+            // },
+            // {
+            //     files: [],
+            //     filepath: path.resolve(__dirname, './public/vendor/lodash.dll.js'),
+            //     outputPath: 'vendor',
+            //     publicPath: './vendor'
+            // },
+            // {
+            //     files: ['pageTwo.html'],
+            //     filepath: path.resolve(__dirname, './public/vendor/queryString.dll.js'),
+            //     outputPath: 'vendor',
+            //     publicPath: './vendor'
+            // },
             {
-                // Files that the assets will be added to
-                // 不设置或者为 []，则表示为所有的页面都注入
                 files: [],
-                // The absolute path of the file you want to add to the compilation, and resulting HTML file. Also support globby string.
-                // filepath: path.resolve(__dirname, './public/vendor/*.dll.js'),
-                filepath: path.resolve(__dirname, './public/assets/js/jquery.min.js'),
-                // the output directory of the file.
-                outputPath: 'vendor',
-                // the public path of the script or link tag.
-                publicPath: './vendor'
+                filepath: path.resolve(__dirname, './src/services/baseConfig.js'),
+                outputPath: 'js',
+                publicPath: './js'
             },
-            {
-                files: ['pageOne.html'],
-                filepath: path.resolve(__dirname, './public/vendor/lodash.dll.js'),
-                outputPath: 'vendor',
-                publicPath: './vendor'
-            },
-            {
-                files: ['pageTwo.html'],
-                filepath: path.resolve(__dirname, './public/vendor/queryString.dll.js'),
-                outputPath: 'vendor',
-                publicPath: './vendor'
-            }
         ]),
         new CopyWebpackPlugin([
             {
                 from: path.resolve(__dirname, 'public/assets'),
                 to: path.resolve(__dirname, './dist/assets')
-            }
+            },
+            {
+                from: path.resolve(__dirname, 'public/template.html'),
+                to: path.resolve(__dirname, './dist/template.html')
+            },
+            // {
+            //     from: path.resolve(__dirname, 'src/services/baseConfig.js'),
+            //     to: path.resolve(__dirname, './dist/js')
+            // }
         ])
         // 不必通过 import/ require 使用模块
         // new webpack.ProvidePlugin({
@@ -183,19 +196,20 @@ module.exports = {
     optimization: {
         // true by default --对编译产生的代码进行压缩
         minimize: false,
-        splitChunks: {
-            cacheGroups: {
-                commons: {
-                    name: 'commons',
-                    chunks: 'initial'
-                }
-            }
-        }
+        // splitChunks: {
+        //     cacheGroups: {
+        //         commons: {
+        //             name: 'commons',
+        //             chunks: 'initial'
+        //         }
+        //     }
+        // }
     },
     externals: {
         // 属性名称是 jquery, 表示应该排除 import $ from 'jquery' 中的 jquery 模块
         // $ 的值将被用来检索一个全局的 $ 变量。换句话说，当设置为一个字符串时，它将被视为全局的
-        jquery: '$'
+        jquery: '$',
+        jquery: 'jQuery'
     }
 }
 

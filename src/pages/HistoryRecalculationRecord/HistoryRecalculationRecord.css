@@ -1,0 +1,162 @@
+.container-fluid {
+  padding: 20px;
+}
+
+.container-title {
+  position: relative;
+  padding-bottom: 20px;
+  padding-left: 12px;
+  line-height: 20px;
+}
+
+.container-title::before {
+  content: '';
+  height: 20px;
+  left: 0;
+  position: absolute;
+  border: 2px solid #058ecc;
+}
+
+.container-title span {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.container-title label {
+  font-weight: normal;
+}
+
+.container-title .form-group {
+  margin-right: 20px;
+}
+
+.container-command .second-form {
+  margin-top: 15px;
+}
+
+.container-command label {
+  font-weight: normal;
+}
+
+.container-command .date {
+  width: 155px;
+  margin-right: 20px;
+}
+
+.container-command .bootstrap-select {
+  width: 120px;
+  margin-right: 20px;
+}
+
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+  width: 120px;
+}
+
+.container-command .indexCategorySelect .bootstrap-select {
+  width: 127px !important;
+  margin-right: 13px;
+}
+
+.container-command .queryBtn {
+  padding: 6px 15px;
+  background-color: #058ecc;
+  border-color: #058ecc;
+}
+
+.container-content {
+  padding-top: 20px;
+}
+
+.container-content .table {
+  width: 100%;
+}
+
+.container-content .table th {
+  background-color: #F3FBFF;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.container-content .table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+  border-bottom-width: 0;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+  background-color: #fff;
+}
+
+.table-striped>tbody>tr:nth-of-type(even) {
+  background-color: #fafafa;
+}
+
+/**
+ * 分页样式
+ */
+
+
+ .dataTables_wrapper .dataTables_paginate {
+  float: right;
+}
+
+.dataTables_wrapper .dataTables_length {
+  float: right;
+  padding-top: 6px;
+}
+
+.dataTables_wrapper .dataTables_length select.input-sm {
+  height: 26px;
+  line-height: 26px;
+  border-radius: 4px;
+}
+
+
+/**
+* 数据列表分页组件
+*/
+.dataTables_wrapper .dataTables_paginate {
+  padding-top: 6px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  border: 0;
+  padding: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button:active {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.dataTables_wrapper .dataTables_paginate .pagination > li:first-child > a,
+.dataTables_paginate .pagination > li:first-child > span {
+  border: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate .pagination > li:last-child > a,
+.dataTables_paginate .pagination > li:first-child > span {
+  border: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate .pagination > li > a,
+.dataTables_paginate .pagination > li > span {
+  padding: 1px 7px;
+  border-radius: 4px;
+  margin: 0 4px;
+}
+
+.dataTables_wrapper .dataTables_paginate .pagination > li > a:focus {
+  outline: none;
+}
+
+/* datatable表格行样式 */
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  padding: 6px;
+}

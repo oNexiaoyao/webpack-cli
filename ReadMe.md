@@ -68,3 +68,14 @@
 [参考资料二](https://www.izhongxia.com/posts/44724.html#2-%E5%A4%9A%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%8F%91)
 
 [参考资料三](https://www.cnblogs.com/lvdabao/p/5944420.html)
+
+***
+# 使用说明
+
+* 参考 `src/pages` 下的 `HistoryRecalculation`文件夹的配置
+* 可以将不改变的模块使用 `npm run build:dll`提前编译
+
+# 还未处理的问题
+
+* 不能通用的根据创建的目录结构来动态生成对应文件
+* 文件模板的入口文件（html、js、css）不能自定义。理想下的是一个模块下的入口文件应当是 index.html、index.js、index.css。

@@ -11,7 +11,7 @@ module.exports = {
     entry: {
         // 可以分类打包成多个文件，也可以合在一起打包成一个文件
         // 将lodash 模块作为入口编译成动态链接库
-        lodash: ['lodash'],
+        // 'lodash': ['lodash'],
         'queryString': ['query-string']
     },
     output: {

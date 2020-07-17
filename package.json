@@ -52,7 +52,7 @@
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "jquery": "^3.4.1",
     "layui-src": "2.3.0",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.19",
     "moment": "^2.22.2",
     "query-string": "^6.8.2"
   }
